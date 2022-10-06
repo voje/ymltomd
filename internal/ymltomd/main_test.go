@@ -1,9 +1,13 @@
 package ymltomd
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/voje/ymltomd/internal/testdocs"
+)
 
 func TestRead(t *testing.T) {
 	ytm := NewYtm(YtmCfg{})
-
-	_ = ytm
+	ytm.Read(testdocs.Doc1)
+	t.Log(ytm)
 }
