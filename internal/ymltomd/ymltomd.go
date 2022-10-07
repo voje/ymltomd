@@ -4,16 +4,17 @@ package ymltomd
 
 import (
 	"fmt"
-	"strings"
 
+	"github.com/voje/ymltomd/internal/doctree"
 	yaml "gopkg.in/yaml.v3"
 )
 
 type YtmCfg struct{}
 
 type Ytm struct {
-	bYml []byte
-	data map[string]interface{}
+	bYml    []byte
+	data    map[string]interface{}
+	docTree *doctree.DocTree
 }
 
 func NewYtm(cfg YtmCfg) *Ytm {
@@ -30,23 +31,9 @@ func (y *Ytm) Read(p []byte) (n int, err error) {
 		return 0, err
 	}
 
-	y.traverse(y.data, 0)
+	y.docTree = doctree.NewDocTree(y.data)
 
 	return 0, nil
-}
-
-func (y *Ytm) traverse(node map[string]interface{}, depth int) {
-	padding := strings.Repeat(" ", depth*2)
-	for k, v := range node {
-		fmt.Printf("%s[%v]: ", padding, k)
-		switch v.(type) {
-		case map[string]interface{}:
-			fmt.Println()
-			y.traverse(v.(map[string]interface{}), depth+1)
-		case string:
-			fmt.Printf("%v\n", v)
-		}
-	}
 }
 
 func (y *Ytm) String() string {
@@ -57,6 +44,9 @@ func (y *Ytm) String() string {
 
 	s += "\ny.data\n---\n"
 	s += fmt.Sprintf("%+v\n", y.data)
+
+	s += "\ny.docTree\n---\n"
+	s += fmt.Sprintf("%s\n", y.docTree)
 
 	return s
 }

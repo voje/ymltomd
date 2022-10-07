@@ -6,6 +6,9 @@ dict_struct:
   subfield_two: "sub val two"
 field_one: "some val"
 field_two: "second val"
+field_three:
+  sub_l1:
+    sub_l2: "test from three"
 `)
 
 var Doc2 = []byte(`---
