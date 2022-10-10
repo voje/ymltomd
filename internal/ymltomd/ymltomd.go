@@ -5,35 +5,22 @@ package ymltomd
 import (
 	"fmt"
 
-	"github.com/voje/ymltomd/internal/doctree"
 	yaml "gopkg.in/yaml.v3"
 )
 
 type YtmCfg struct{}
 
 type Ytm struct {
-	bYml    []byte
-	data    map[string]interface{}
-	docTree *doctree.DocTree
+	strBuffer string
+	bYml      []byte
+	data      map[string]interface{}
+	// docTree *doctree.DocTree
+	tree yaml.Node
 }
 
 func NewYtm(cfg YtmCfg) *Ytm {
 	ytm := Ytm{}
 	return &ytm
-}
-
-func (y *Ytm) Read(p []byte) (n int, err error) {
-	y.bYml = p
-
-	y.data = make(map[string]interface{})
-	err = yaml.Unmarshal(y.bYml, y.data)
-	if err != nil {
-		return 0, err
-	}
-
-	y.docTree = doctree.NewDocTree(y.data)
-
-	return 0, nil
 }
 
 func (y *Ytm) String() string {
@@ -45,8 +32,16 @@ func (y *Ytm) String() string {
 	s += "\ny.data\n---\n"
 	s += fmt.Sprintf("%+v\n", y.data)
 
-	s += "\ny.docTree\n---\n"
-	s += fmt.Sprintf("%s\n", y.docTree)
+	s += "\ny.tree\n---\n"
+	s += fmt.Sprintf("%+v\n", y.tree)
+
+	s += "\ny.strBuffer\n---\n"
+	s += fmt.Sprintf("%+v\n", y.strBuffer)
+
+	/*
+		s += "\ny.docTree\n---\n"
+		s += fmt.Sprintf("%s\n", y.docTree)
+	*/
 
 	return s
 }

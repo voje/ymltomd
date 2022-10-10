@@ -1,15 +1,11 @@
 package ymltomd
 
-import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
-)
-
+/*
 func TestRead(t *testing.T) {
 
-	doc := []byte(`---
-dict_struct: 
+	doc := []byte(`
+dict_struct:
+  # test comment
   level1:
     level2: "hhey22"`)
 
@@ -24,3 +20,4 @@ dict_struct:
 
 	t.Log(ytm)
 }
+*/

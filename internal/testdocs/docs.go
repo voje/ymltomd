@@ -2,6 +2,7 @@ package testdocs
 
 var Doc1 = []byte(`
 dict_struct: 
+  # comment one
   subfield_one: "sub val one"
   subfield_two: "sub val two"
 field_one: "some val"

@@ -10,6 +10,12 @@ type DocTree struct {
 	stringRep string
 }
 
+func NewDocTree(m map[string]interface{}) *DocTree {
+	dt := DocTree{}
+	dt.Root = parseMap("root", m)
+	return &dt
+}
+
 type Node struct {
 	Name     string
 	Children []*Node
@@ -58,10 +64,4 @@ func (dt *DocTree) String() string {
 	ret := dt.stringRep
 	dt.stringRep = ""
 	return ret
-}
-
-func NewDocTree(m map[string]interface{}) *DocTree {
-	dt := DocTree{}
-	dt.Root = parseMap("root", m)
-	return &dt
 }
